@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Information Form</title>
+    <title>Aadhar Information Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,7 +76,7 @@
         <input type="number" id="age" min="0" max="120">
         
         <label for="aadhaar">Aadhaar Number:</label>
-        <input type="text" id="aadhaar" maxlength="14" pattern="\d{4}\s\d{4}\s\d{4}" placeholder="1234 5678 9123">
+        <input type="text" id="aadhaar" maxlength="14" placeholder="1234 5678 9123">
         
         <button id="showDataBtn">Show Data</button>
         <button id="clearDataBtn">Clear</button>
@@ -87,6 +87,7 @@
     <script>
         document.getElementById('showDataBtn').addEventListener('click', showData);
         document.getElementById('clearDataBtn').addEventListener('click', clearData);
+        document.getElementById('aadhaar').addEventListener('input', formatAadhaar);
 
         function showData() {
             const name = document.getElementById('name').value;
@@ -112,6 +113,19 @@
             document.getElementById('age').value = '';
             document.getElementById('aadhaar').value = '';
             document.getElementById('output').innerHTML = '';
+        }
+
+        function formatAadhaar(event) {
+            const input = event.target;
+            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+            if (value.length > 12) {
+                value = value.slice(0, 12);
+            }
+            const parts = [];
+            for (let i = 0; i < value.length; i += 4) {
+                parts.push(value.slice(i, i + 4));
+            }
+            input.value = parts.join(' ');
         }
     </script>
 </body>
